@@ -32,7 +32,7 @@ module.exports = function (grunt) {
         },
         connect: {
             options: {
-                port: 9000,
+                port: 9090,
                 livereload: 35729,
                 hostname: 'localhost'
             },
@@ -73,7 +73,7 @@ module.exports = function (grunt) {
         },
         bower: {
             options: {
-                exclude: ['modernizr']
+                exclude: ['requirejs']
             },
             all: {
                 rjsConfig: '<%= yeoman.app %>/js/main.js'
@@ -86,9 +86,9 @@ module.exports = function (grunt) {
         var cors_proxy = require("corsproxy");
         var http_proxy = require("http-proxy");
         var port = 1234;
-        // cors_proxy.options = {
-        //     target: 'http://dev.smap.com.au/'
-        // };
+        cors_proxy.options = {
+            target: 'http://dev.smap.com.au/'
+        };
         http_proxy.createServer(cors_proxy).listen(port);
         grunt.log.writeln('Started CORS proxy on localhost:' + port);
 
