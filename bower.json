@@ -1,6 +1,14 @@
 {
   "name": "smartWork",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "requirejs": "~2.1.8",
+    "jquery": "~2.0.3",
+    "underscore": "~1.5.2",
+    "backbone": "~1.0.0",
+    "requirejs-text": "~2.0.10",
+    "snapjs": "*",
+    "topcoat": "~0.7.0"
+  },
   "devDependencies": {}
 }
