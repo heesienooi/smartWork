@@ -17,6 +17,9 @@ require.config({
                 "jquery"
             ],
             exports: "Backbone"
+        },
+        snapjs: {
+            exports: 'Snap'
         }
     }
 });

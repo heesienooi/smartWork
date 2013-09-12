@@ -1,7 +1,8 @@
 define([
     'backbone',
-    'text!templates/app.html'
-], function (Backbone, html) {
+    'text!templates/app.html',
+    'snapjs'
+], function (Backbone, html, Snap) {
     'use strict';
 
     var AppView = Backbone.View.extend({
@@ -10,8 +11,15 @@ define([
 
         template: _.template(html),
 
+        events: {
+            'click #open-menu-stack': 'snapperOpen'
+        },
+
         initialize: function () {
             this.render();
+            this.snapper = new Snap({
+              element: this.$el.find('.appContent')[0]
+            });
         },
 
         render: function () {
@@ -25,6 +33,10 @@ define([
 
             $navBarTitle.html(options.navBarTitle);
             $appContent.append(options.contentView.el);
+        },
+
+        snapperOpen: function () {
+            this.snapper.open('left');
         }
     });
 
