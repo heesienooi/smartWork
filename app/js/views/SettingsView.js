@@ -4,7 +4,7 @@ define([
 ], function (Backbone, html) {
     'use strict';
 
-    var AppView = Backbone.View.extend({
+    var SettingsView = Backbone.View.extend({
 
         template: _.template(html),
 
@@ -19,5 +19,5 @@ define([
 
     });
 
-    return AppView;
+    return SettingsView;
 })
