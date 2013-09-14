@@ -12,7 +12,8 @@ define([
         template: _.template(html),
 
         events: {
-            'click #open-menu-stack': 'snapperOpen'
+            'click #open-menu-stack': 'snapperOpenPane',
+            'click .navigation a': 'snapperClosePane'
         },
 
         initialize: function () {
@@ -29,14 +30,18 @@ define([
 
         setContentView: function (options) {
             var $navBarTitle = this.$el.find('.navBarTitle');
-            var $appContent = this.$el.find('.appContent');
+            var $content = this.$el.find('.content');
 
             $navBarTitle.html(options.navBarTitle);
-            $appContent.append(options.contentView.el);
+            $content.html(options.contentView.el);
         },
 
-        snapperOpen: function () {
+        snapperOpenPane: function () {
             this.snapper.open('left');
+        },
+
+        snapperClosePane: function () {
+            this.snapper.close();
         }
     });
 
