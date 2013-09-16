@@ -91,3 +91,5 @@
 .settings .btn {
     float: right;
 }
+
+#map { height: 300px; }
