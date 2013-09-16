@@ -3,8 +3,9 @@ define([
     'collections/TaskCollection',
     'views/AppView',
     'views/TaskListView',
+    'views/TaskMapView',
     'views/SettingsView'
-], function (Backbone, taskCollection, AppView, TaskListView, SettingsView) {
+], function (Backbone, taskCollection, AppView, TaskListView, TaskMapView, SettingsView) {
     'use strict';
 
     var AppRouter = Backbone.Router.extend({
@@ -15,6 +16,7 @@ define([
 
         routes: {
             '': 'taskListView',
+            'taskmap' : 'taskMapView',
             'settings': 'settingsView'
         },
 
@@ -27,6 +29,19 @@ define([
                 navBarTitle: 'Task List',
                 contentView: this.views.taskListView
             });
+        },
+
+        taskMapView: function () {
+            if (!this.views.taskMapView) {
+                this.views.taskMapView = new TaskMapView({ collection: taskCollection });
+            }
+
+            this.appView.setContentView({
+                navBarTitle: 'Task Map',
+                contentView: this.views.taskMapView
+            });
+
+            this.views.taskMapView.configureMap();
         },
 
         settingsView: function () {

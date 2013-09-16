@@ -1,13 +1,13 @@
 <div class="topcoat-list__container">
     <ul class="topcoat-list">
         <% _.each(tasks, function(task) { %>
-            <li class="topcoat-list__item">
-                <span class="topcoat-icon--large icon--task"></span>
+        <li class="topcoat-list__item">
+            <span class="topcoat-icon--large icon--task"></span>
                 <span class="task-list__item__text">
                     <%- task.task.title %><br>
                     <%- task.task.scheduled_at %>
                 </span>
-            </li>
+        </li>
         <% }); %>
     </ul>
 </div>
