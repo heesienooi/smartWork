@@ -1,12 +1,12 @@
 define([
     'backbone',
-    'text!templates/taskList.html'
-], function (Backbone, html) {
+    'hbs!templates/tasklist'
+], function (Backbone, tmpl) {
     'use strict';
 
     var TaskListView = Backbone.View.extend({
 
-        template: _.template(html),
+        template: tmpl,
 
         initialize: function () {
             this.listenTo(this.collection, 'reset', this.render);

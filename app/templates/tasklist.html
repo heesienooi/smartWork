@@ -1,0 +1,24 @@
+<div class="topcoat-navigation-bar">
+    <div class="topcoat-navigation-bar__item left quarter">
+        <a id="open-nav" class="topcoat-icon-button--quiet">
+            <span class="topcoat-icon topcoat-icon--menu-stack"></span>
+        </a>
+    </div>
+    <div class="topcoat-navigation-bar__item center half">
+        <h1 class="navBarTitle topcoat-navigation-bar__title">Task List</h1>
+    </div>
+</div>
+<div class="topcoat-list">
+    <h3 class="topcoat-list__header">Assignments</h3>
+    <ul class="topcoat-list__container">
+        {{#each tasks}}
+        <li class="topcoat-list__item">
+            <span class="topcoat-icon--large icon--task"></span>
+            <span class="task-list__item__text">
+                {{ task.title }}<br>
+                {{ task.scheduled_at }}
+            </span>
+        </li>
+        {{/each}}
+    </ul>
+</div>

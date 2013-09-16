@@ -1,25 +1,25 @@
 define([
     'backbone',
-    'text!templates/app.html',
+    'hbs!templates/app',
     'snapjs'
-], function (Backbone, html, Snap) {
+], function (Backbone, tmpl, Snap) {
     'use strict';
 
     var AppView = Backbone.View.extend({
 
         el: '#app',
 
-        template: _.template(html),
+        template: tmpl,
 
         events: {
-            'click #open-menu-stack': 'snapperOpenPane',
-            'click .navigation a': 'snapperClosePane'
+            'click #open-nav': 'openNav',
+            'click .nav a': 'closeNav'
         },
 
         initialize: function () {
             this.render();
             this.snapper = new Snap({
-              element: this.$el.find('.appContent')[0]
+              element: this.$el.find('.snap-content')[0]
             });
         },
 
@@ -29,18 +29,17 @@ define([
         },
 
         setContentView: function (options) {
-            var $navBarTitle = this.$el.find('.navBarTitle');
-            var $content = this.$el.find('.content');
-
-            $navBarTitle.html(options.navBarTitle);
-            $content.html(options.contentView.el);
+            var $content = this.$el.find('.snap-content');
+            $content.html(options.view.el);
         },
 
-        snapperOpenPane: function () {
-            this.snapper.open('left');
+        openNav: function () {
+            if (this.snapper.state().state === 'closed') {
+                this.snapper.open('left');
+            }
         },
 
-        snapperClosePane: function () {
+        closeNav: function () {
             this.snapper.close();
         }
     });

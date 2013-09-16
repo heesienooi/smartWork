@@ -1,12 +1,12 @@
 define([
     'backbone',
-    'text!templates/settings.html',
-], function (Backbone, html) {
+    'hbs!templates/settings',
+], function (Backbone, tmpl) {
     'use strict';
 
     var SettingsView = Backbone.View.extend({
 
-        template: _.template(html),
+        template: tmpl,
 
         initialize: function () {
             this.render();

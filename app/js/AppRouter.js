@@ -1,6 +1,6 @@
 define([
     'backbone',
-    'collections/TaskCollection',
+    'models/TaskCollection',
     'views/AppView',
     'views/TaskListView',
     'views/SettingsView'
@@ -24,8 +24,7 @@ define([
             }
 
             this.appView.setContentView({
-                navBarTitle: 'Task List',
-                contentView: this.views.taskListView
+                view: this.views.taskListView
             });
         },
 
@@ -35,8 +34,7 @@ define([
             }
 
             this.appView.setContentView({
-                navBarTitle: 'Settings',
-                contentView: this.views.settingsView
+                view: this.views.settingsView
             });
         }
 

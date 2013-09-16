@@ -1,26 +1,38 @@
 // Requirejs configuration settings
 require.config({
     paths: {
-        jquery: "../bower_components/jquery/jquery",
-        backbone: "../bower_components/backbone/backbone",
-        text: "../bower_components/requirejs-text/text",
-        snapjs: "../bower_components/snapjs/snap",
-        underscore: "../bower_components/underscore/underscore",
+        templates: '../templates',
+        jquery: '../bower_components/jquery/jquery',
+        backbone: '../bower_components/backbone/backbone',
+        text: '../bower_components/requirejs-text/text',
+        snapjs: '../bower_components/snapjs/snap',
+        underscore: '../bower_components/underscore/underscore',
+        handlebars: '../bower_components/handlebars/handlebars',
+        hbs: '../bower_components/require-handlebars-plugin/hbs',
+        i18nprecompile: '../bower_components/require-handlebars-plugin/hbs/i18nprecompile',
+        json2: '../bower_components/require-handlebars-plugin/hbs/json2'
     },
     shim: {
         underscore: {
-            exports: "_"
+            exports: '_'
         },
         backbone: {
             deps: [
-                "underscore",
-                "jquery"
+                'underscore',
+                'jquery'
             ],
-            exports: "Backbone"
+            exports: 'Backbone'
         },
         snapjs: {
             exports: 'Snap'
+        },
+        handlebars: {
+            exports: 'Handlebars'
         }
+    },
+    hbs: {
+        disableI18n: true,
+        templateExtension: 'html'
     }
 });
 
