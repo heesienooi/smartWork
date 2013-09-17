@@ -37,7 +37,7 @@ define([
 
             this.appView.setContentView({
                 navBarTitle: 'Task Map',
-                contentView: this.views.taskMapView
+                view: this.views.taskMapView
             });
 
             this.views.taskMapView.configureMap();

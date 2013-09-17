@@ -10,7 +10,8 @@ require.config({
         handlebars: '../bower_components/handlebars/handlebars',
         hbs: '../bower_components/require-handlebars-plugin/hbs',
         i18nprecompile: '../bower_components/require-handlebars-plugin/hbs/i18nprecompile',
-        json2: '../bower_components/require-handlebars-plugin/hbs/json2'
+        json2: '../bower_components/require-handlebars-plugin/hbs/json2',
+        leaflet: '../bower_components/leaflet/dist/leaflet',
     },
     shim: {
         underscore: {

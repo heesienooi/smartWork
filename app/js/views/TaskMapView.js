@@ -1,7 +1,8 @@
 define([
     'backbone',
-    'hbs!templates/taskmap'
-], function (Backbone, tmpl) {
+    'hbs!templates/taskmap',
+    'leaflet'
+], function (Backbone, tmpl, L) {
     'use strict';
 
     var TaskMapView = Backbone.View.extend({
