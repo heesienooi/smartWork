@@ -5,9 +5,24 @@ define([
 ], function (Backbone, tmpl, L) {
     'use strict';
 
+    var destination;    // destination marker point
+    var destLat;        // destination coordinates
+    var destLong;
+    var userLat;        // user coordinates
+    var userLong;
+
+    var selectedLat;
+    var selectedLong;
+
+    var map; //the map
+
     var TaskMapView = Backbone.View.extend({
 
         template: tmpl,
+
+        events :{
+            'click #getDirectionsButton' : 'getDirections'
+        },
 
         initialize: function () {
          this.render();
@@ -25,24 +40,14 @@ define([
             return this;
         },
 
-        configureMap: function () {
-            //coordinates
-            var lat1 = -37.808975;
-            var long1 = 144.965272;
+        // the meat of routing process
+        getDirections: function (){
 
-            var lat2 = -37.808149;
-            var long2 = 144.962692;
-            // hard code coordinates
-//            var map = L.map('map').setView([-37.808975, 144.965272], 13);
+            destination = L.marker([userLat, userLong]).addTo(map);
+            destination.bindPopup("<b>Start</b><br>You are here.");
+            map.setView([(userLat+ selectedLat)/2, (userLong+selectedLong)/2], 17)
 
-            var map = L.map('map').setView([((lat1)+(lat2))/2, (long1+long2)/2], 17)
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-
-//            var marker = L.marker([latLong[1], latLong[0]]).addTo(map);
-
-            //instruction
+            //instructions
             var NoTurn = 0;          //Give no instruction at all
             var GoStraight = 1;      //Tell user to go straight!
             var TurnSlightRight = 2;
@@ -62,19 +67,17 @@ define([
             var EnterAgainstAllowedDirection = 16;
             var LeaveAgainstAllowedDirection = 17;
 
-
-
             $.getJSON(
-                "http://router.project-osrm.org/viaroute?loc="+ lat1+","+ long1+ "&loc="+lat2+","+long2+"&instructions=true",
+                "http://router.project-osrm.org/viaroute?loc="+ userLat+","+ userLong+ "&loc="+selectedLat+","+selectedLong+"&instructions=true",
                 function(data){
                     console.log(data);
                     console.log("----------------- " + data.route_name[0]+ " to " + data.route_name[1] + " -----------------");
-                    for (i=0; i<data.route_instructions.length;i++)
+                    for (var i=0; i<data.route_instructions.length;i++)
                     {
                         switch(data.route_instructions[i][0])
                         {
                             case '0':
-                                console.log("No Turn onto " + data.route_instructions[i][1], data.route_instructions[i][5]);
+                                console.log("No Turn" + data.route_instructions[i][1], data.route_instructions[i][5]);
                                 break;
                             case '1':
                                 console.log("Go straight onto " + data.route_instructions[i][1], data.route_instructions[i][5]);
@@ -150,18 +153,13 @@ define([
                         } while (b >= 0x20);
                         var dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
                         lng += dlng;
-                        //array.push( {lat: lat * precision, lng: lng * precision} );
                         array.push( [lat * precision, lng * precision] );
                     }
 
-                    var marker = L.marker([lat1, long1]).addTo(map);
-                    marker.bindPopup("<b>Start</b><br>Initial Location.").openPopup();
 
-                    var destination = L.marker([lat2, long2]).addTo(map);
-                    destination.bindPopup("<b>End</b><br>Destination.");
                     var line_points = array;
-                    line_points.unshift([lat1,long1]);
-                    line_points.push([lat2,long2]);
+                    line_points.unshift([userLat,userLong]);
+                    line_points.push([selectedLat,selectedLong]);
 
                     var featureGroup = L.featureGroup().addTo(map);
                     var polyline = L.polyline(line_points, polyline_options).addTo(featureGroup);
@@ -170,6 +168,39 @@ define([
                         color: '#000'
                     };
                 });
+
+        },
+
+        configureMap: function () {
+            //coordinates
+            destLat = -37.808149;
+            destLong = 144.962692;
+
+
+            navigator.geolocation.getCurrentPosition (function (pos)
+            {
+                userLat = pos.coords.latitude;
+                userLong = pos.coords.longitude;
+                console.log('User Latitude: ' + userLat);
+                console.log('User Longitude: ' + userLong);
+            });
+
+            //set the view on the map with the coordinates
+            map = L.map('map').setView([destLat, destLong], 17)
+//            var map = L.map('map').setView([((userLat)+(destLat))/2, (userLong+destLong)/2], 17)
+            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            destination = L.marker([destLat, destLong]).addTo(map);
+            destination.bindPopup("<b>End</b><br>Destination.");
+
+            // listen to click on points
+            destination.on('click', function (d) {
+                // currently selected point's coordinates:
+                selectedLat = destination._latlng["lat"];
+                selectedLong = destination._latlng["lng"];
+            });
 
         }
     });
