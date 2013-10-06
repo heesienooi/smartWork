@@ -4,8 +4,9 @@ define([
     'views/AppView',
     'views/TaskListView',
     'views/TaskMapView',
-    'views/SettingsView'
-], function (Backbone, taskCollection, AppView, TaskListView, TaskMapView, SettingsView) {
+    'views/SettingsView',
+    'views/EnketoView'
+], function (Backbone, taskCollection, AppView, TaskListView, TaskMapView, SettingsView, EnketoView) {
     'use strict';
 
     var AppRouter = Backbone.Router.extend({
@@ -17,7 +18,12 @@ define([
         routes: {
             '': 'taskListView',
             'taskmap' : 'taskMapView',
-            'settings': 'settingsView'
+            'settings': 'settingsView',
+            'enketo/:index': 'enketoView'
+        },
+
+        initialize: function () {
+            taskCollection.fetch({ reset: true });
         },
 
         taskListView: function () {
@@ -50,6 +56,20 @@ define([
 
             this.appView.setContentView({
                 view: this.views.settingsView
+            });
+        },
+
+        enketoView: function (index) {
+            var model = taskCollection.at(index);
+
+            if (!this.views.enketoView) {
+                delete this.views.enketoView;
+            }
+
+            this.views.enketoView = new EnketoView({ model: model });
+
+            this.appView.setContentView({
+                view: this.views.enketoView
             });
         }
 

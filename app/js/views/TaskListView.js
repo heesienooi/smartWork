@@ -10,7 +10,6 @@ define([
 
         initialize: function () {
             this.listenTo(this.collection, 'reset', this.render);
-            this.collection.fetch({ reset: true });
         },
 
         render: function () {

@@ -10,6 +10,7 @@ define([
             // TODO: abstract this hard code serverUrl to some settings model
             var serverUrl = "http://rmit.smap.com.au";
             var formId = this.get('task').form_id;
+            var model = this;
 
             // Send ajax request to server to get enketo url
             $.ajax({
@@ -25,7 +26,9 @@ define([
                     var userId = 'admin'
                     var url = data.smap_url + '&user=' + userId;
 
-                    callback(url);
+                    model.set('enketoUrl', url);
+
+                    if (typeof callback === 'function') callback(url);
                 },
                 error: function(xhr, textStatus, err) {
                     if(xhr.readyState == 0 || xhr.status == 0) {

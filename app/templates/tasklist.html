@@ -12,12 +12,14 @@
     <h3 class="topcoat-list__header">Assignments</h3>
     <ul class="topcoat-list__container">
         {{#each tasks}}
-        <li class="topcoat-list__item">
-            <span class="topcoat-icon--large icon--task"></span>
-            <span class="task-list__item__text">
-                {{ task.title }}<br>
-                {{ task.scheduled_at }}
-            </span>
+        <li class="task-item topcoat-list__item">
+            <a href="#enketo/{{ @index }}">
+                <span class="topcoat-icon--large icon--task"></span>
+                <span class="task-list__item__text">
+                    {{ task.title }}<br>
+                    {{ task.scheduled_at }}
+                </span>
+            </a>
         </li>
         {{/each}}
     </ul>
