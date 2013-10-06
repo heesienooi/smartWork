@@ -88,7 +88,7 @@ module.exports = function (grunt) {
         var http_proxy = require("http-proxy");
         var port = 1234;
         cors_proxy.options = {
-            target: 'http://dev.smap.com.au/'
+            target: 'http://rmit.smap.com.au/'
         };
         http_proxy.createServer(cors_proxy).listen(port);
         grunt.log.writeln('Started CORS proxy on localhost:' + port);
