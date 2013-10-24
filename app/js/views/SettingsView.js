@@ -13,7 +13,8 @@ define([
         },
 
         render: function () {
-            this.$el.html(this.template());
+            var fields = this.model.getSettingFields();
+            this.$el.html(this.template({ 'settings': fields }));
             return this;
         }
 

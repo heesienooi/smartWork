@@ -1,12 +1,13 @@
 define([
     'backbone',
     'models/TaskCollection',
+    'models/SettingsModel',
     'views/AppView',
     'views/TaskListView',
     'views/TaskMapView',
     'views/SettingsView',
     'views/EnketoView'
-], function (Backbone, taskCollection, AppView, TaskListView, TaskMapView, SettingsView, EnketoView) {
+], function (Backbone, taskCollection, settingsModel, AppView, TaskListView, TaskMapView, SettingsView, EnketoView) {
     'use strict';
 
     var AppRouter = Backbone.Router.extend({
@@ -51,7 +52,7 @@ define([
 
         settingsView: function () {
             if (!this.views.settingsView) {
-                this.views.settingsView = new SettingsView();
+                this.views.settingsView = new SettingsView({ model: settingsModel });
             }
 
             this.appView.setContentView({

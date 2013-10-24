@@ -11,26 +11,14 @@
 <div class="settings topcoat-list">
     <h3 class="topcoat-list__header">Settings</h3>
     <ul class="topcoat-list__container">
+        {{#each settings}}
         <li class="topcoat-list__item">
             <button class="btn topcoat-icon-button">
                 <span class="topcoat-icon" style="background-color:#A5A7A7;"></span>
             </button>
-            <label>URL</label>
-            <span class="value">http://dev.smap.com.au</span>
+            <label>{{ label }}</label>
+            <span class="value">{{ value }}</span>
         </li>
-        <li class="topcoat-list__item">
-            <button class="btn topcoat-icon-button">
-                <span class="topcoat-icon" style="background-color:#A5A7A7;"></span>
-            </button>
-            <label>Username</label>
-            <span class="value">heesien</span>
-        </li>
-        <li class="topcoat-list__item">
-            <button class="btn topcoat-icon-button">
-                <span class="topcoat-icon" style="background-color:#A5A7A7;"></span>
-            </button>
-            <label>Password</label>
-            <span class="value">********</span>
-        </li>
+        {{/each}}
     </ul>
 </div>
