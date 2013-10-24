@@ -24,7 +24,8 @@ define([
             for (var name in settingsModel) {
                 fields.push({
                     'label': SETTING_LABEL_MAP[name],
-                    'value': settingsModel[name]
+                    'value': settingsModel[name],
+                    'name': name
                 });
             }
 
