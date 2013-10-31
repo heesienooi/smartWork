@@ -1,14 +1,14 @@
 define([
     'underscore',
-    'backbone'
-], function (_, Backbone) {
+    'backbone',
+    'models/SettingsModel'
+], function (_, Backbone, settingsModel) {
     'use strict';
 
     var TaskModel = Backbone.Model.extend({
 
         generateEnketoUrl: function (callback) {
-            // TODO: abstract this hard code serverUrl to some settings model
-            var serverUrl = "http://rmit.smap.com.au";
+            var serverUrl = settingsModel.get('url');
             var formId = this.get('task').form_id;
             var model = this;
 
@@ -22,8 +22,7 @@ define([
                 },
                 dataType: 'jsonp',
                 success : function (data) {
-                    // TODO: abstract this hard code userId to some settings model
-                    var userId = 'admin'
+                    var userId = settingsModel.get('username');
                     var url = data.smap_url + '&user=' + userId;
 
                     model.set('enketoUrl', url);

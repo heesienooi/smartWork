@@ -14,7 +14,7 @@ define([
     var SettingsModel = Backbone.Model.extend({
 
         defaults: {
-            'url': 'http://dev.smap.com.au/',
+            'url': 'http://dev.smap.com.au',
             'username': 'heesien',
             'password': 'heesien'
         },
