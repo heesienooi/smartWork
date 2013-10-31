@@ -11,7 +11,8 @@
     "topcoat": "~0.7.0",
     "handlebars": "~1.0.0",
     "require-handlebars-plugin": "~0.4.0",
-    "leaflet": "~0.6.4"
+    "leaflet": "~0.6.4",
+    "backbone.localStorage": "~1.1.7"
   },
   "devDependencies": {}
 }

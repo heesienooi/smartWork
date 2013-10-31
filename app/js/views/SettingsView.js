@@ -35,6 +35,7 @@ define([
             if (newValue.length > 0) {
                 // Update model with new value entered by user
                 this.model.set(fieldName, newValue);
+                this.model.save();
             }
         }
 

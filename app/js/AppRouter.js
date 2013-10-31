@@ -24,6 +24,8 @@ define([
         },
 
         initialize: function () {
+            // When application launched, start fetch user's settings from local storage
+            settingsModel.fetch();
             taskCollection.fetch({ reset: true });
         },
 

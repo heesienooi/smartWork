@@ -12,6 +12,7 @@ require.config({
         i18nprecompile: '../bower_components/require-handlebars-plugin/hbs/i18nprecompile',
         json2: '../bower_components/require-handlebars-plugin/hbs/json2',
         leaflet: '../bower_components/leaflet/dist/leaflet',
+        backboneLocalStorage: '../bower_components/backbone.localStorage/backbone.localStorage'
     },
     shim: {
         underscore: {
