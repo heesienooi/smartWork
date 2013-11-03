@@ -6,8 +6,6 @@ define([
     'use strict';
 
     var destination;    // destination marker point
-    var destLat;        // destination coordinates
-    var destLong;
     var userLat;        // user coordinates
     var userLong;
 
@@ -172,10 +170,6 @@ define([
         },
 
         configureMap: function () {
-            //coordinates
-            destLat = -37.808149;
-            destLong = 144.962692;
-
 
             navigator.geolocation.getCurrentPosition (function (pos)
             {
@@ -185,22 +179,47 @@ define([
                 console.log('User Longitude: ' + userLong);
             });
 
-            //set the view on the map with the coordinates
-            map = L.map('map').setView([destLat, destLong], 17)
-//            var map = L.map('map').setView([((userLat)+(destLat))/2, (userLong+destLong)/2], 17)
+            if(map!= null)
+                map.remove();
+
+            var firstTaskCoord = this.collection.toJSON()[0].location.geometry.coordinates[0];
+
+            var theLong = parseFloat(firstTaskCoord.split(" ")[0]);
+            var theLat = parseFloat(firstTaskCoord.split(" ")[1]);
+            console.log(this.collection.toJSON()[0]);
+
+
+            map = L.map('map').setView([theLat, theLong], 7);
             L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
+            for(var i=0; i< this.collection.toJSON().length; i++)
+            {
 
-            destination = L.marker([destLat, destLong]).addTo(map);
-            destination.bindPopup("<b>End</b><br>Destination.");
+                //set the view on the map with the coordinates
+                var taskCoord = this.collection.toJSON()[i].location.geometry.coordinates[0];
 
-            // listen to click on points
-            destination.on('click', function (d) {
-                // currently selected point's coordinates:
-                selectedLat = destination._latlng["lat"];
-                selectedLong = destination._latlng["lng"];
-            });
+                 theLong = parseFloat(taskCoord.split(" ")[0]);
+                 theLat = parseFloat(taskCoord.split(" ")[1]);
+
+//            var map = L.map('map').setView([((userLat)+(destLat))/2, (userLong+destLong)/2], 17)
+
+                destination = L.marker([theLat, theLong]).addTo(map);
+                destination.bindPopup(this.collection.toJSON()[i].task.title);
+//
+                // listen to click on points
+                destination.on('click', function (d) {
+                    // currently selected point's coordinates:
+                    selectedLat = destination._latlng["lat"];
+                    selectedLong = destination._latlng["lng"];
+                    console.log(selectedLat);
+                    console.log(selectedLong);
+                });
+            }
+
+
+
+
 
         }
     });
