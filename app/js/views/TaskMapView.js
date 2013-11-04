@@ -11,6 +11,7 @@ define([
 
     var selectedLat;
     var selectedLong;
+    var currentSelectedPoint;
 
     var map; //the map
 
@@ -19,7 +20,8 @@ define([
         template: tmpl,
 
         events :{
-            'click #getDirectionsButton' : 'getDirections'
+            'click #getDirectionsButton' : 'getDirections',
+            'click #completeTaskButton' : 'completeTask'
         },
 
         initialize: function () {
@@ -30,10 +32,6 @@ define([
         render: function () {
             var html = this.template();
             this.$el.html(html);
-//            console.log(this.collection.toJSON());
-//            var coordinates = this.collection.toJSON()[0].location.geometry.coordinates[0];
-//            var latLong=coordinates.split(" ");
-//            var map = L.map('map').setView([latLong[1], latLong[0]], 13);
 
             return this;
         },
@@ -43,7 +41,6 @@ define([
 
             destination = L.marker([userLat, userLong]).addTo(map);
             destination.bindPopup("<b>Start</b><br>You are here.");
-            map.setView([(userLat+ selectedLat)/2, (userLong+selectedLong)/2], 17)
 
             //instructions
             var NoTurn = 0;          //Give no instruction at all
@@ -128,6 +125,19 @@ define([
                         }
                     }
 
+                    var zoomLevel = 17
+                    if(data.route_summary.total_distance< 4000)
+                        zoomLevel = 15;
+                    else if(data.route_summary.total_distance<6000)
+                        zoomLevel = 13;
+                    else if(data.route_summary.total_distance<10000)
+                        zoomLevel = 11
+                    else if(data.route_summary.total_distance>10000)
+                        zoomLevel=8;
+
+                    console.log(data.route_summary.total_distance);
+                    map.setView([(userLat+ selectedLat)/2, (userLong+selectedLong)/2], zoomLevel); map.setView([(userLat+ selectedLat)/2, (userLong+selectedLong)/2], zoomLevel);
+
                     var encoded = data.route_geometry;
                     var precision = 6;
 
@@ -169,6 +179,18 @@ define([
 
         },
 
+        completeTask: function(){
+            for(var i=0; i< this.collection.toJSON().length;i++)
+            {
+                if((this.collection.toJSON()[i].task.id == currentSelectedPoint.taskData.task.id)
+                   && (this.collection.toJSON()[i].assignment.assignment_id ==
+                    currentSelectedPoint.taskData.assignment.assignment_id))
+                {
+                    window.location.href = '#enketo/'+i;
+                }
+            }
+        },
+
         configureMap: function () {
 
             navigator.geolocation.getCurrentPosition (function (pos)
@@ -204,23 +226,19 @@ define([
 
 //            var map = L.map('map').setView([((userLat)+(destLat))/2, (userLong+destLong)/2], 17)
 
-                destination = L.marker([theLat, theLong]).addTo(map);
+                destination =  L.marker([theLat, theLong]).addTo(map);
                 destination.bindPopup(this.collection.toJSON()[i].task.title);
-//
+                destination.taskData = this.collection.toJSON()[i];
+
                 // listen to click on points
                 destination.on('click', function (d) {
                     // currently selected point's coordinates:
-                    selectedLat = destination._latlng["lat"];
-                    selectedLong = destination._latlng["lng"];
-                    console.log(selectedLat);
-                    console.log(selectedLong);
+                    selectedLat = d.latlng.lat;
+                    selectedLong = d.latlng.lng;
+                    currentSelectedPoint = d.target;
+                    console.log(currentSelectedPoint);
                 });
             }
-
-
-
-
-
         }
     });
 
