@@ -65,66 +65,85 @@ define([
             $.getJSON(
                 "http://router.project-osrm.org/viaroute?loc="+ userLat+","+ userLong+ "&loc="+selectedLat+","+selectedLong+"&instructions=true",
                 function(data){
+                    var routeInstructions = [];
+
                     console.log(data);
                     console.log("----------------- " + data.route_name[0]+ " to " + data.route_name[1] + " -----------------");
                     for (var i=0; i<data.route_instructions.length;i++)
                     {
+                        var insCount=i;
                         switch(data.route_instructions[i][0])
                         {
                             case '0':
-                                console.log("No Turn" + data.route_instructions[i][1], data.route_instructions[i][5]);
+                                routeInstructions.push("<br> " + parseInt(insCount+1) +". " + "No Turn" + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
+//                                console.log("No Turn" + data.route_instructions[i][1], data.route_instructions[i][5]);
                                 break;
                             case '1':
-                                console.log("Go straight onto " + data.route_instructions[i][1], data.route_instructions[i][5]);
+                                routeInstructions.push("<br> " + parseInt(insCount+1)+". " + "Go straight onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
+//                                console.log("Go straight onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
                                 break;
                             case '2':
-                                console.log("Turn right onto " + data.route_instructions[i][1], data.route_instructions[i][5]);
+                                routeInstructions.push("<br> " + parseInt(insCount+1)+". " + "Turn right onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
+//                                console.log("Turn right onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
                                 break;
                             case '3':
-                                console.log("Turn right onto " + data.route_instructions[i][1], data.route_instructions[i][5]);
+                                routeInstructions.push("<br> " + parseInt(insCount+1)+". " + "Turn right onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
+//                                console.log("Turn right onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
                                 break;
                             case '4':
-                                console.log("Turn right onto " + data.route_instructions[i][1], data.route_instructions[i][5]);
+                                routeInstructions.push("<br> " + parseInt(insCount+1)+". " + "Turn right onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
+//                                console.log("Turn right onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
                                 break;
                             case '5':
-                                console.log("U-turn onto " + data.route_instructions[i][1], data.route_instructions[i][5]);
+                                routeInstructions.push("<br> " + parseInt(insCount+1)+". " + "U-turn onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
+//                                console.log("U-turn onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
                                 break;
                             case '6':
-                                console.log("Turn left onto " + data.route_instructions[i][1], data.route_instructions[i][5]);
+                                routeInstructions.push("<br> " + parseInt(insCount+1)+". " + "Turn left onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
+//                                console.log("Turn left onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
                                 break;
                             case '7':
-                                console.log("Turn left onto " + data.route_instructions[i][1], data.route_instructions[i][5]);
+                                routeInstructions.push("<br> " + parseInt(insCount+1)+". " + "Turn left onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
+//                                console.log("Turn left onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
                                 break;
                             case '8':
-                                console.log("Turn left onto " + data.route_instructions[i][1], data.route_instructions[i][5]);
+                                routeInstructions.push("<br> " + parseInt(insCount+1)+". " + "Turn left onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
+//                                console.log("Turn left onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
                                 break;
-                            case '9':
-                                console.log("Reach via point onto " + data.route_instructions[i][1], data.route_instructions[i][5]);
+                            case '9':routeInstructions.push("<br> " + parseInt(insCount+1)+". " + "Reach via point onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
+//                                console.log("Reach via point onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
                                 break;
                             case '10':
-                                console.log("Continue onto " + data.route_instructions[i][1], data.route_instructions[i][5]);
+                                routeInstructions.push("<br> " + parseInt(insCount+1)+". " + "Continue onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
+//                                console.log("Continue onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
                                 break;
                             case '11':
-                                console.log("Enter roundabout onto " + data.route_instructions[i][1], data.route_instructions[i][5]);
+                                routeInstructions.push("<br> " + parseInt(insCount+1)+". " + "Enter roundabout onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
+//                                console.log("Enter roundabout onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
                                 break;
                             case '12':
-                                console.log("Leave roundabout onto " + data.route_instructions[i][1], data.route_instructions[i][5]);
+                                routeInstructions.push("<br> " + parseInt(insCount+1)+". " + "Leave roundabout onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
+//                                console.log("Leave roundabout onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
                                 break;
                             case '13':
-                                console.log("DStay on roundabout onto " + data.route_instructions[i][1], data.route_instructions[i][5]);
+                                routeInstructions.push("<br> " + parseInt(insCount+1)+". " + "Stay on roundabout onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
+//                                console.log("Stay on roundabout onto " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
                                 break;
                             case '14':
-                                console.log("Start at end of street on " + data.route_instructions[i][1], data.route_instructions[i][5]);
+                                routeInstructions.push("<br> " + parseInt(insCount+1)+". " + "Start at end of street on " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
+//                                console.log("Start at end of street on " + data.route_instructions[i][1]+" "+ data.route_instructions[i][5]);
                                 break;
                             case '15':
-                                console.log("You have reached your destination");
+                                routeInstructions.push("<br> " + parseInt(insCount+1)+". " + "You have reached your destination");
+//                                console.log("You have reached your destination");
                                 break;
                             default:
-                                console.log("Unknown instruction received!");
                                 break;
                         }
                     }
 
+                    console.log(routeInstructions[0]);
+                    document.getElementById('routeList').innerHTML = routeInstructions
                     var zoomLevel = 17
                     if(data.route_summary.total_distance< 4000)
                         zoomLevel = 15;
@@ -163,7 +182,6 @@ define([
                         lng += dlng;
                         array.push( [lat * precision, lng * precision] );
                     }
-
 
                     var line_points = array;
                     line_points.unshift([userLat,userLong]);
